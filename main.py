@@ -8,82 +8,84 @@ import random
 console = Console()
 
 chars = {
-  # Vowels
-  "a": "あ",
-  "i": "い",
-  "u": "う",
-  "e": "え",
-  "o": "お",
+    # Vowels
+    "a": "あ",
+    "i": "い",
+    "u": "う",
+    "e": "え",
+    "o": "お",
 
-  # K-row
-  "ka": "か",
-  "ki": "き",
-  "ku": "く",
-  "ke": "け",
-  "ko": "こ",
+    # K-row
+    "ka": "か",
+    "ki": "き",
+    "ku": "く",
+    "ke": "け",
+    "ko": "こ",
 
-  # S-row
-  "sa": "さ",
-  "shi": "し",
-  "su": "す",
-  "se": "せ",
-  "so": "そ",
+    # S-row
+    "sa": "さ",
+    "shi": "し",
+    "su": "す",
+    "se": "せ",
+    "so": "そ",
 
-  # T-row
-  "ta": "た",
-  "chi": "ち",
-  "tsu": "つ",
-  "te": "て",
-  "to": "と",
+    # T-row
+    "ta": "た",
+    "chi": "ち",
+    "tsu": "つ",
+    "te": "て",
+    "to": "と",
 
-  # N-row
-  "na": "な",
-  "ni": "に",
-  "nu": "ぬ",
-  "ne": "ね",
-  "no": "の",
+    # N-row
+    "na": "な",
+    "ni": "に",
+    "nu": "ぬ",
+    "ne": "ね",
+    "no": "の",
 
-  # H-row
-  "ha": "は",
-  "hi": "ひ",
-  "fu": "ふ",
-  "he": "へ",
-  "ho": "ほ",
+    # H-row
+    "ha": "は",
+    "hi": "ひ",
+    "fu": "ふ",
+    "he": "へ",
+    "ho": "ほ",
 
-  # M-row
-  "ma": "ま",
-  "mi": "み",
-  "mu": "む",
-  "me": "め",
-  "mo": "も",
+    # M-row
+    "ma": "ま",
+    "mi": "み",
+    "mu": "む",
+    "me": "め",
+    "mo": "も",
 
-  # Y-row
-  "ya": "や",
-  "yu": "ゆ",
-  "yo": "よ",
+    # Y-row
+    "ya": "や",
+    "yu": "ゆ",
+    "yo": "よ",
 
-  # R-row
-  "ra": "ら",
-  "ri": "り",
-  "ru": "る",
-  "re": "れ",
-  "ro": "ろ",
+    # R-row
+    "ra": "ら",
+    "ri": "り",
+    "ru": "る",
+    "re": "れ",
+    "ro": "ろ",
 
-  # W-row
-  "wa": "わ",
-  "wo": "を",
+    # W-row
+    "wa": "わ",
+    "wo": "を",
 
-  # N
-  "n": "ん"
+    # N
+    "n": "ん"
 }
 
 enabled_chars = list()
 
 STORAGE_FILE = "enabled_chars.json"
 
+
 def save_state():
     with open(STORAGE_FILE, "w", encoding="utf-8") as f:
         json.dump(enabled_chars, f, ensure_ascii=False, indent=2)
+
 
 def load_state():
     global enabled_chars
@@ -107,10 +109,11 @@ def start():
             console.print("Correct!")
         else:
             console.print(f"Wrong! The correct answer is {char}")
-            
+
         console.print("Press any key to continue...")
         console.input()
         console.clear()
+
 
 def display_hiragana_table():
     table = Table()
@@ -123,10 +126,12 @@ def display_hiragana_table():
     console.input()
     menu()
 
+
 def disable_characters():
     global enabled_chars
     choices = [
-        {"name": f"{chars[c]} ({c})", "value": c, "enabled": c in enabled_chars}
+        {"name": f"{chars[c]} ({c})", "value": c,
+         "enabled": c in enabled_chars}
         for c in chars.keys()
     ]
     selected = inquirer.checkbox(
@@ -135,7 +140,7 @@ def disable_characters():
         instruction="Use arrows + space to toggle, Enter to confirm",
         cycle=True
     ).execute()
-    
+
     enabled_chars = [c for c in chars.keys() if c in selected]
 
     save_state()
@@ -143,9 +148,9 @@ def disable_characters():
     console.print(f"[green]Enabled characters updated![/green]")
     console.print("Press any key to continue...")
     console.input()
- 
+
     menu()
-        
+
 
 def menu():
     console.clear()
@@ -184,7 +189,7 @@ def main():
         enabled_chars = list(chars.keys())
 
     menu()
-            
+
 
 if __name__ == "__main__":
     main()
