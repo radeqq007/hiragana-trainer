@@ -120,7 +120,7 @@ def display_hiragana_table():
     menu()
 
 
-def disable_characters():
+def enabled_characters():
     global enabled_chars
     choices = [
         {"name": f"{chars[c]} ({c})", "value": c,
@@ -128,7 +128,7 @@ def disable_characters():
         for c in chars.keys()
     ]
     selected = inquirer.checkbox(
-        message="Select characters to disable:",
+        message="Select enabled characters:",
         choices=choices,
         instruction="Use arrows + space to toggle, Enter to confirm",
         cycle=True
@@ -151,7 +151,7 @@ def menu():
         message="Select an option: ",
         choices=[
             "Start",
-            "Disable Characters",
+            "Change Enabled Characters",
             "Display Hiragana Table",
             "Exit"
         ],
@@ -160,8 +160,8 @@ def menu():
 
     if option == "Start":
         start()
-    elif option == "Disable Characters":
-        disable_characters()
+    elif option == "Change Enabled Characters":
+        enabled_characters()
     elif option == "Display Hiragana Table":
         display_hiragana_table()
     elif option == "Exit":
