@@ -94,6 +94,8 @@ def start():
             expand=True,
         )
         console.print(cols)
+        console.print("> ", end="")
+
         answer = console.input()
         if answer == char:
             console.print("Correct!")
