@@ -1,4 +1,6 @@
 from rich.console import Console
+from rich.align import Align
+from rich.columns import Columns
 from rich.table import Table
 from InquirerPy import inquirer
 import os
@@ -80,14 +82,26 @@ def start():
         menu()
         return
 
+    correct = 0
+    total = 0
     while True:
         char = random.choice(enabled_chars)
-        console.print(f"What is the romanji for {chars[char]}?")
+
+        cols = Columns(
+            [f"What is the romanji for {chars[char]}?",
+             Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)")],
+            equal=True,
+            expand=True,
+        )
+        console.print(cols)
         answer = console.input()
         if answer == char:
             console.print("Correct!")
+            correct += 1
         else:
             console.print(f"Wrong! The correct answer is {char}")
+
+        total += 1
 
         console.print("Press any key to continue...")
         console.input()
