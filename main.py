@@ -78,7 +78,7 @@ def load_state():
 def start():
     if not enabled_chars:
         console.print("[red]No characters are enabled![/red]")
-        console.input("Press any key to continue...")
+        console.input("Press any key to continue...", style="dim")
         menu()
         return
 
@@ -103,7 +103,7 @@ def start():
 
         total += 1
 
-        console.print("Press any key to continue...")
+        console.print("Press any key to continue...", style="dim")
         console.input()
         console.clear()
 
@@ -115,7 +115,7 @@ def display_hiragana_table():
     for char in chars:
         table.add_row(chars[char], char)
     console.print(table)
-    console.print("Press any key to continue...")
+    console.print("Press any key to continue...", style="dim")
     console.input()
     menu()
 
@@ -139,7 +139,7 @@ def disable_characters():
     save_state()
 
     console.print(f"[green]Enabled characters updated![/green]")
-    console.print("Press any key to continue...")
+    console.print("Press any key to continue...", style="dim")
     console.input()
 
     menu()
