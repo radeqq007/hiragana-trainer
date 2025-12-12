@@ -81,14 +81,45 @@ def start():
         console.input("Press any key to continue...", style="dim")
         menu()
         return
+    
+    option = inquirer.select(
+        message="Select the mode: ",
+        choices=[
+            "Single Character",
+            "Multiple Characters"
+        ],
+        cycle=True
+    ).execute()
 
+    if option == "Single Character":
+        main_loop(1)
+    elif option == "Multiple Characters":
+        try:
+            length_input = console.input("How many characters should be in one quiz question?\n> ")
+            length = int(length_input)
+            if length < 1 or length > len(enabled_chars):
+                console.print(f"[red]Please enter a number between 1 and {len(enabled_chars)}.[/red]")
+                console.input("Press any key to continue...", style="dim")
+                menu()
+                return
+            main_loop(length)
+        except ValueError:
+            console.print("[red]Invalid input. Please enter a number.[/red]")
+            console.input("Press any key to continue...", style="dim")
+            menu()
+    else:
+        console.print("Invalid option")
+        console.input("Press any key to continue...", style="dim")
+        menu()
+
+def main_loop(length: int):
     correct = 0
     total = 0
     while True:
-        char = random.choice(enabled_chars)
+        char = random.choice(enabled_chars) if length == 1 else random.sample(enabled_chars, length)
 
         cols = Columns(
-            [f"What is the romanji for {chars[char]}?",
+            [f"What is the romanji for {''.join([chars[c] for c in char]) if length > 1 else chars[char]}?",
              Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)")],
             equal=True,
             expand=True,
@@ -97,18 +128,20 @@ def start():
         console.print("> ", end="")
 
         answer = console.input()
-        if answer == char:
+        if length == 1 and answer == char:
+            console.print("Correct!")
+            correct += 1
+        elif length > 1 and answer == "".join(char):
             console.print("Correct!")
             correct += 1
         else:
-            console.print(f"Wrong! The correct answer is {char}")
+            console.print(f"Wrong! The correct answer is {''.join([c for c in char] if length > 1 else char)}")
 
         total += 1
 
         console.print("Press any key to continue...", style="dim")
         console.input()
         console.clear()
-
 
 def display_hiragana_table():
     table = Table()
