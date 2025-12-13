@@ -127,7 +127,7 @@ def main_loop(length: int):
     mixer.init()
 
     while True:
-        char = [random.choice(enabled_chars)] if length == 1 else random.sample(enabled_chars, length)
+        char = random.sample(enabled_chars, length)
 
         cols = Columns(
             [f"What is the romanji for {''.join([chars[c] for c in char])}?",
