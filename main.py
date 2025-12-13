@@ -120,10 +120,10 @@ def main_loop(length: int):
     correct = 0
     total = 0
     while True:
-        char = random.choice(enabled_chars) if length == 1 else random.sample(enabled_chars, length)
+        char = [random.choice(enabled_chars)] if length == 1 else random.sample(enabled_chars, length)
 
         cols = Columns(
-            [f"What is the romanji for {''.join([chars[c] for c in char]) if length > 1 else chars[char]}?",
+            [f"What is the romanji for {''.join([chars[c] for c in char])}?",
              Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)")],
             equal=True,
             expand=True,
@@ -132,14 +132,11 @@ def main_loop(length: int):
         console.print("> ", end="")
 
         answer = console.input()
-        if length == 1 and answer == char:
-            console.print("Correct!")
-            correct += 1
-        elif length > 1 and answer == "".join(char):
+        if answer == "".join(char):
             console.print("Correct!")
             correct += 1
         else:
-            console.print(f"Wrong! The correct answer is {''.join([c for c in char] if length > 1 else char)}")
+            console.print(f"Wrong! The correct answer is {''.join([c for c in char])}")
 
         total += 1
 
