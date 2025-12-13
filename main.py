@@ -213,8 +213,7 @@ def main():
     global enabled_chars
     if os.path.exists(STORAGE_FILE):
         try:
-            with open(STORAGE_FILE, "r", encoding="utf-8") as f:
-                enabled_chars = json.load(f)
+            load_state()
         except json.JSONDecodeError:
             enabled_chars = list(chars.keys())
     else:
