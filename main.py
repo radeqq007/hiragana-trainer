@@ -81,7 +81,7 @@ def load_state():
 def start():
     if not enabled_chars:
         console.print("[red]No characters are enabled![/red]")
-        console.input("Press any key to continue...", style="dim")
+        pause()
         menu()
         return
     
@@ -104,17 +104,17 @@ def start():
             length = int(length_input)
             if length < 1 or length > len(enabled_chars):
                 console.print(f"[red]Please enter a number between 1 and {len(enabled_chars)}.[/red]")
-                console.input("Press any key to continue...", style="dim")
+                pause()
                 menu()
                 return
             main_loop(length)
         except ValueError:
             console.print("[red]Invalid input. Please enter a number.[/red]")
-            console.input("Press any key to continue...", style="dim")
+            pause()
             menu()
     else:
         console.print("Invalid option")
-        console.input("Press any key to continue...", style="dim")
+        pause()
         menu()
 
 def main_loop(length: int):
@@ -155,8 +155,8 @@ def main_loop(length: int):
 
         total += 1
 
-        console.print("Press any key to continue...", style="dim")
-        console.input()
+        pause()
+
         console.clear()
 
 def display_hiragana_table():
@@ -166,8 +166,7 @@ def display_hiragana_table():
     for char in chars:
         table.add_row(chars[char], char)
     console.print(table)
-    console.print("Press any key to continue...", style="dim")
-    console.input()
+    pause()
     menu()
 
 
@@ -190,8 +189,8 @@ def enabled_characters():
     save_state()
 
     console.print(f"[green]Enabled characters updated![/green]")
-    console.print("Press any key to continue...", style="dim")
-    console.input()
+    
+    pause()
 
     menu()
 
@@ -220,6 +219,9 @@ def menu():
     else:
         console.print("Invalid option")
 
+def pause():
+    console.print("Press any key to continue...", style="dim")
+    console.input()
 
 def main():
     global enabled_chars
