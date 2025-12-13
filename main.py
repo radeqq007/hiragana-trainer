@@ -8,6 +8,7 @@ from pygame import mixer
 import os
 import json
 import random
+import time
 
 console = Console()
 
@@ -148,6 +149,9 @@ def main_loop(length: int):
 
         mixer.music.load("temp.mp3")
         mixer.music.play()
+
+        while mixer.music.get_busy():
+            time.sleep(0.1)
 
         total += 1
 
