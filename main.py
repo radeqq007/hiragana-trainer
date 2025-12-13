@@ -5,6 +5,7 @@ from rich.table import Table
 from InquirerPy import inquirer
 from gtts import gTTS
 from pygame import mixer
+from io import BytesIO
 import os
 import json
 import random
@@ -145,9 +146,11 @@ def main_loop(length: int):
             console.print(f"Wrong! The correct answer is {''.join([c for c in char])}")
 
         tts = gTTS(''.join([chars[c] for c in char]), lang="ja")
-        tts.save("temp.mp3")
+        fp = BytesIO()
+        tts.write_to_fp(fp)
+        fp.seek(0)
 
-        mixer.music.load("temp.mp3")
+        mixer.music.load(fp)
         mixer.music.play()
 
         while mixer.music.get_busy():
