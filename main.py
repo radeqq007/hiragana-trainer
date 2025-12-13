@@ -121,6 +121,9 @@ def main_loop(length: int):
 
     correct = 0
     total = 0
+
+    mixer.init()
+
     while True:
         char = [random.choice(enabled_chars)] if length == 1 else random.sample(enabled_chars, length)
 
@@ -143,7 +146,6 @@ def main_loop(length: int):
         tts = gTTS(''.join([chars[c] for c in char]), lang="ja")
         tts.save("temp.mp3")
 
-        mixer.init()
         mixer.music.load("temp.mp3")
         mixer.music.play()
 
