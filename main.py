@@ -130,7 +130,7 @@ def main_loop(length: int):
         char = random.sample(enabled_chars, length)
 
         cols = Columns(
-            [f"What is the romanji for {''.join([chars[c] for c in char])}?",
+            [f"What is the romaji for {''.join([chars[c] for c in char])}?",
              Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)")],
             equal=True,
             expand=True,
