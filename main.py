@@ -82,6 +82,8 @@ def start():
         menu()
         return
     
+    console.clear()
+
     option = inquirer.select(
         message="Select the mode: ",
         choices=[
@@ -113,6 +115,8 @@ def start():
         menu()
 
 def main_loop(length: int):
+    console.clear()
+
     correct = 0
     total = 0
     while True:
