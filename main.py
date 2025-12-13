@@ -3,6 +3,8 @@ from rich.align import Align
 from rich.columns import Columns
 from rich.table import Table
 from InquirerPy import inquirer
+from gtts import gTTS
+from pygame import mixer
 import os
 import json
 import random
@@ -137,6 +139,13 @@ def main_loop(length: int):
             correct += 1
         else:
             console.print(f"Wrong! The correct answer is {''.join([c for c in char])}")
+
+        tts = gTTS(''.join([chars[c] for c in char]), lang="ja")
+        tts.save("temp.mp3")
+
+        mixer.init()
+        mixer.music.load("temp.mp3")
+        mixer.music.play()
 
         total += 1
 
