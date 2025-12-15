@@ -158,8 +158,6 @@ def main_loop(length: int):
 
         total += 1
 
-        pause()
-
         console.clear()
 
 def display_hiragana_table():
