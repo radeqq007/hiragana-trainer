@@ -10,6 +10,7 @@ import os
 import json
 import random
 import time
+import sys
 
 console = Console()
 
@@ -78,6 +79,17 @@ def load_state():
         with open(STORAGE_FILE, "r", encoding="utf-8") as f:
             enabled_chars = json.load(f)
 
+def flush_input():
+    if os.name == 'nt':
+        # Windows
+        import msvcrt
+        while msvcrt.kbhit():
+            msvcrt.getch()
+    else:
+        # Unix/Linux
+        import sys
+        import termios
+        termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
 def start():
     if not enabled_chars:
@@ -169,6 +181,9 @@ def main_loop(length: int):
 
         while mixer.music.get_busy():
             time.sleep(0.1)
+
+        # clear the input buffer to prevent accidental key presses
+        flush_input()
 
         total += 1
 
