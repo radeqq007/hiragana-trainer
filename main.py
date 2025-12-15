@@ -143,6 +143,14 @@ def main_loop(length: int):
         console.print("> ", end="")
 
         answer = console.input()
+
+        if answer.lower() == "exit":
+            console.print("[yellow]Exiting to menu...[/yellow]")
+            time.sleep(0.5)
+            console.clear()
+            menu()
+            return
+
         if answer == "".join(char):
             console.print("Correct!")
             correct += 1
