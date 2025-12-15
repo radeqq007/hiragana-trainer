@@ -142,9 +142,9 @@ def main_loop(length: int):
         console.print(cols)
         console.print("> ", end="")
 
-        answer = console.input()
+        answer = console.input().lower().strip()
 
-        if answer.lower() == "exit":
+        if answer == "exit":
             console.print("[yellow]Exiting to menu...[/yellow]")
             time.sleep(0.5)
             console.clear()
