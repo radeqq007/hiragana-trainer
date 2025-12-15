@@ -1,4 +1,4 @@
-from rich.console import Console
+from rich.console import Console, Group
 from rich.align import Align
 from rich.columns import Columns
 from rich.table import Table
@@ -123,6 +123,7 @@ def main_loop(length: int):
 
     correct = 0
     total = 0
+    streak = 0
 
     mixer.init()
 
@@ -131,7 +132,10 @@ def main_loop(length: int):
 
         cols = Columns(
             [f"What is the romaji for {''.join([chars[c] for c in char])}?",
-             Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)")],
+             Group(
+                Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)"),
+                Align.right(f"🔥 {streak}" if streak > 1 else ""),
+             )],
             equal=True,
             expand=True,
         )
@@ -142,8 +146,10 @@ def main_loop(length: int):
         if answer == "".join(char):
             console.print("Correct!")
             correct += 1
+            streak += 1
         else:
             console.print(f"Wrong! The correct answer is {''.join([c for c in char])}")
+            streak = 0
 
         tts = gTTS(''.join([chars[c] for c in char]), lang="ja")
         fp = BytesIO()
