@@ -78,6 +78,7 @@ def load_state():
         with open(STORAGE_FILE, "r", encoding="utf-8") as f:
             enabled_chars = json.load(f)
 
+
 def flush_input():
     if os.name == 'nt':
         # Windows
@@ -90,13 +91,14 @@ def flush_input():
         import termios
         termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
+
 def start():
     if not enabled_chars:
         console.print("[red]No characters are enabled![/red]")
         pause()
         menu()
         return
-    
+
     console.clear()
 
     option = inquirer.select(
@@ -112,10 +114,12 @@ def start():
         main_loop(1)
     elif option == "Multiple Characters":
         try:
-            length_input = console.input("How many characters should be in one quiz question?\n> ")
+            length_input = console.input(
+                "How many characters should be in one quiz question?\n> ")
             length = int(length_input)
             if length < 1 or length > len(enabled_chars):
-                console.print(f"[red]Please enter a number between 1 and {len(enabled_chars)}.[/red]")
+                console.print(
+                    f"[red]Please enter a number between 1 and {len(enabled_chars)}.[/red]")
                 pause()
                 menu()
                 return
@@ -128,6 +132,7 @@ def start():
         console.print("Invalid option")
         pause()
         menu()
+
 
 def main_loop(length: int):
     console.clear()
@@ -144,9 +149,10 @@ def main_loop(length: int):
         cols = Columns(
             [f"What is the romaji for {''.join([chars[c] for c in char])}?",
              Group(
-                Align.right(f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)"),
+                Align.right(
+                    f"{correct}/{total} ({(correct/total*100) if total > 0 else 0:.2f}%)"),
                 Align.right(f"🔥 {streak}" if streak > 1 else ""),
-             )],
+            )],
             equal=True,
             expand=True,
         )
@@ -167,7 +173,8 @@ def main_loop(length: int):
             correct += 1
             streak += 1
         else:
-            console.print(f"Wrong! The correct answer is {''.join([c for c in char])}")
+            console.print(
+                f"Wrong! The correct answer is {''.join([c for c in char])}")
             streak = 0
 
         tts = gTTS(''.join([chars[c] for c in char]), lang="ja")
@@ -187,6 +194,7 @@ def main_loop(length: int):
         total += 1
 
         console.clear()
+
 
 def display_hiragana_table():
     table = Table()
@@ -218,7 +226,7 @@ def enabled_characters():
     save_state()
 
     console.print(f"[green]Enabled characters updated![/green]")
-    
+
     pause()
 
     menu()
@@ -248,9 +256,11 @@ def menu():
     else:
         console.print("Invalid option")
 
+
 def pause():
     console.print("Press any key to continue...", style="dim")
     console.input()
+
 
 def main():
     global enabled_chars
