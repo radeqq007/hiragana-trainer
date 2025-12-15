@@ -10,7 +10,6 @@ import os
 import json
 import random
 import time
-import sys
 
 console = Console()
 
